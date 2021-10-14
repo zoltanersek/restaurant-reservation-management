@@ -1,0 +1,36 @@
+.header {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  
+    .logo-container {
+      height: 100%;
+      width: 80px;
+      padding: 10px;
+
+      &:hover {
+        transform: scale(1.5);
+      }
+    }
+  
+    .options {
+      width: 70%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+  
+      .option {
+        padding: 10px 15px;
+        cursor: pointer;
+        text-transform: uppercase;
+        margin: 0px 10px;
+
+        &:hover {
+            color: gray;
+        }
+      }
+    }
+  }
