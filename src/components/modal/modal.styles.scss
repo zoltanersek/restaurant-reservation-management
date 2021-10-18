@@ -1,4 +1,4 @@
-.edit-table-modal {
+.modal {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -34,16 +34,6 @@
 
     .modal-body {
       padding: 2px 16px;
-
-      form {
-        display: grid;
-        grid-template-rows: 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr;
-        
-        * {
-            margin: 3px;
-        }
-      }
     }
   }
 }

@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
-import EmptyCell from '../../components/empty-cell/empty-cell.component';
-import LayoutElement from '../../components/layout-element/layout-element.component';
-import EditTableModal from '../../components/edit-table-modal/edit-table-modal.component';
-import './layout-editor.styles.scss'
-import { useSelector } from 'react-redux';
-import { selectShowModal, selectTables } from '../../redux/layout/layout.selectors';
+import React from "react";
+import EditTable from "../../components/edit-table/edit-table.component";
+import "./layout-editor.styles.scss";
+import { useSelector } from "react-redux";
+import { selectShowModal } from "../../redux/layout/layout.selectors";
+import LayoutPreview from "../../components/layout-preview/layout-preview.component";
+import { useDispatch } from "react-redux";
+import { setActivePosition, setActiveTable, toggleLayoutModal } from "../../redux/layout/layout.actions";
 
 const LayoutEditorPage = () => {
-    const tables = useSelector(selectTables)
-    const showModal = useSelector(selectShowModal)
-    const allPositions = tables.map(it => it.position)
-    const tableAtPosition = (position) => tables.find(it => it.position === position)
-    return (
-        <div>
-            {showModal && <EditTableModal />}
-            <div className="layout-container">
-                {[...Array(150)].map((x, i) =>
-                    <div key={i} className="layout-element">
-                        {
-                            allPositions.includes(i) ? <LayoutElement table={tableAtPosition(i)} position={i} /> :
-                                <EmptyCell position={i} />
-                        }
-                    </div>
-                )}
-            </div>
-        </div>
-    )
-}
+  const dispatch = useDispatch();
+  const showModal = useSelector(selectShowModal);
+  const emptyCellClickHandler = (position) => {
+    dispatch(setActivePosition(position));
+    dispatch(toggleLayoutModal());
+  };
+
+  const layoutElementClickHanlder = (table) => {
+    dispatch(setActiveTable(table));
+    dispatch(toggleLayoutModal());
+  };
+
+  return (
+    <div>
+      {showModal && <EditTable />}
+      <LayoutPreview
+        emptyCellClickHandler={emptyCellClickHandler}
+        layoutElementClickHandler={layoutElementClickHanlder}
+        draggable
+      />
+    </div>
+  );
+};
 
 export default LayoutEditorPage;

@@ -1,6 +1,5 @@
 import { LayoutActionTypes } from "./layout.types";
 import { updateTablePosition, updateTable } from "./layout.utils";
-import { v4 as uuidv4 } from 'uuid';
 
 const INITIAL_STATE = {
   showModal: false,
@@ -8,19 +7,19 @@ const INITIAL_STATE = {
   activePosition: undefined,
   tables: [
     {
-      id: uuidv4(),
+      id: "4b4bb309-014f-438b-aa8f-837cbce9d4b3",
       number: 1,
       seats: 2,
       position: 1,
     },
     {
-      id: uuidv4(),
+      id: "e98e1cf7-bc4c-411b-a788-6138e4dc807b",
       number: 2,
       seats: 4,
       position: 2,
     },
     {
-      id: uuidv4(),
+      id: "f02ec913-afa1-40eb-8a90-03b5f15e4529",
       number: 3,
       seats: 4,
       position: 3,
