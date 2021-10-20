@@ -7,6 +7,11 @@ export const selectReservations = createSelector(
   (reservation) => reservation.reservations
 );
 
+export const selectReservationsForTable = (table) => createSelector(
+  [selectReservations],
+  (reservations) => reservations.filter(it => it.table === table)
+)
+
 export const selectShowModal = createSelector(
     [selectReservation],
     (reservation) => reservation.showModal
