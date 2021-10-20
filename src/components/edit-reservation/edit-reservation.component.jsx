@@ -18,7 +18,7 @@ const EditReservation = () => {
   const dispatch = useDispatch();
   const activeTable = useSelector(selectActiveTable);
   const reservations = useSelector(selectReservationsForTable(activeTable.id));
-  const [filterValue, setFilterValue] = useState('all')
+  const [filterValue, setFilterValue] = useState("all");
 
   const close = () => {
     dispatch(setActiveTableReservations(undefined));
@@ -26,44 +26,60 @@ const EditReservation = () => {
   };
 
   const handleFilter = (e) => {
-    setFilterValue(e.target.value)
+    setFilterValue(e.target.value);
+  };
+
+  const getDateFromReservation = (reservation) => {
+    const [minute, second] = reservation.time.split(":");
+    const [year, month, day] = reservation.date.split("-");
+    return new Date(year, month - 1, day, minute, second);
+  };
+
+  function compare(a, b) {
+    const aDate = getDateFromReservation(a);
+    const bDate = getDateFromReservation(b);
+    if (aDate < bDate) {
+      return -1;
+    }
+    if (aDate > bDate) {
+      return 1;
+    }
+    return 0;
   }
 
   const getFilteredValues = () => {
-      if (filterValue === 'all') {
-          return reservations;
-      } else if (filterValue === 'past') {
-        const now = new Date();
-        return reservations.filter(it => {
-            const [minute, second] = it.time.split(':')
-            const [year, month, day] = it.date.split('-')
-            const date = new Date(year, month - 1, day, minute, second);
-            console.log('comparing', date, now)
-            return date <= now;
-        })
-      } else if (filterValue === 'future') {
-        const now = new Date();
-        return reservations.filter(it => {
-            const [minute, second] = it.time.split(':')
-            const [year, month, day] = it.date.split('-')
-            const date = new Date(year, month - 1, day, minute, second);
-            return date > now;
-        })
-      }
-  }
+    if (filterValue === "all") {
+      return reservations;
+    } else if (filterValue === "past") {
+      const now = new Date();
+      return reservations.filter((it) => {
+        const date = getDateFromReservation(it);
+        return date <= now;
+      });
+    } else if (filterValue === "future") {
+      const now = new Date();
+      return reservations.filter((it) => {
+        const date = getDateFromReservation(it);
+        return date > now;
+      });
+    }
+  };
 
   return (
     <Modal
       title={`Edit reservations for table #${activeTable.number}`}
       hideModalHandler={close}
     >
-       <span>Show: </span>
-       <select name="filter" onChange={handleFilter} value={filterValue}>
+      <span>Show: </span>
+      <select name="filter" onChange={handleFilter} value={filterValue}>
         <option value="all">All</option>
         <option value="past">Past reservations only</option>
         <option value="future">Future reservations only</option>
-        </select>
-      <ReservationList reservations={getFilteredValues()} tableId={activeTable.id}/>
+      </select>
+      <ReservationList
+        reservations={getFilteredValues().sort(compare)}
+        tableId={activeTable.id}
+      />
     </Modal>
   );
 };
