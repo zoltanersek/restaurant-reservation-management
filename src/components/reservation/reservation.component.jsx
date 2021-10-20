@@ -5,6 +5,7 @@ import {
   upsertReservation,
 } from "../../redux/reservation/reservation.actions";
 import { selectReservationsForTable } from "../../redux/reservation/reservation.selectors";
+import { getDateFromReservation } from "../../redux/reservation/reservation.utils";
 
 import "./reservation.styles.scss";
 
@@ -48,21 +49,11 @@ const Reservation = ({ reservation, setError, temp, tempCancelled }) => {
       setError("time must be at start of the hour");
       return;
     }
-    const [year, month, date] = fields.date.split("-");
-    const reservationDate = new Date(year, month - 1, date, hour, minute);
+    const reservationDate = getDateFromReservation(fields)
     for (const otherReservation of reservationsForActiveTable.filter(
       (it) => it.id !== reservation.id
     )) {
-      const [otherHour, otherMinute] = otherReservation.time.split(":");
-      const [otherYear, otherMonth, otherDay] =
-        otherReservation.date.split("-");
-      const otherReservationDate = new Date(
-        otherYear,
-        otherMonth - 1,
-        otherDay,
-        otherHour,
-        otherMinute
-      );
+      const otherReservationDate = getDateFromReservation(otherReservation);
       if (reservationDate.getTime() === otherReservationDate.getTime()) {
         setError("date conflicts with another reservation for this table");
         return;

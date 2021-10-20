@@ -9,6 +9,7 @@ import {
   selectActiveTable,
   selectReservationsForTable,
 } from "../../redux/reservation/reservation.selectors";
+import { compareReservations, getDateFromReservation } from "../../redux/reservation/reservation.utils";
 import Modal from "../modal/modal.component";
 import ReservationList from "../reservation-list/reservation-list.component";
 
@@ -28,24 +29,6 @@ const EditReservation = () => {
   const handleFilter = (e) => {
     setFilterValue(e.target.value);
   };
-
-  const getDateFromReservation = (reservation) => {
-    const [minute, second] = reservation.time.split(":");
-    const [year, month, day] = reservation.date.split("-");
-    return new Date(year, month - 1, day, minute, second);
-  };
-
-  function compare(a, b) {
-    const aDate = getDateFromReservation(a);
-    const bDate = getDateFromReservation(b);
-    if (aDate < bDate) {
-      return -1;
-    }
-    if (aDate > bDate) {
-      return 1;
-    }
-    return 0;
-  }
 
   const getFilteredValues = () => {
     if (filterValue === "all") {
@@ -77,7 +60,7 @@ const EditReservation = () => {
         <option value="future">Future reservations only</option>
       </select>
       <ReservationList
-        reservations={getFilteredValues().sort(compare)}
+        reservations={getFilteredValues().sort(compareReservations)}
         tableId={activeTable.id}
       />
     </Modal>
