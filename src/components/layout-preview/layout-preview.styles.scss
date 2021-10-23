@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(15, 1fr);
-    overflow: scroll;
     background-color: black;
     grid-gap: 1px;
     border: 1px solid black;
