@@ -33,3 +33,26 @@ export const deleteTable = (table) => ({
     type: LayoutActionTypes.DELETE_TABLE,
     payload: table
 })
+
+export const fetchStart = () => ({
+    type: LayoutActionTypes.FETCH_START
+})
+
+export const fetchSuccess = (tables) => ({
+    type: LayoutActionTypes.FETCH_SUCCESS,
+    payload: tables
+})
+
+export const fetchFailure = (error) => ({
+    type: LayoutActionTypes.FETCH_FAILURE,
+    payload: error
+})
+
+export const persistSuccess = () => ({
+    type: LayoutActionTypes.PERSIST_SUCCESS
+})
+
+export const persistFailure = (error) => ({
+    type: LayoutActionTypes.PERSIST_FAILURE,
+    payload: error
+})

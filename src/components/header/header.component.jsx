@@ -1,13 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/logo.svg";
+import { signOutStart } from "../../redux/user/user.actions";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 
 import "./header.styles.scss";
 
 const Header = () => {
-    const currentUser = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+
+  const logout = () => {
+    dispatch(signOutStart())
+  }
+
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -23,11 +30,15 @@ const Header = () => {
         <Link className="option" to="/reporting">
           Reporting
         </Link>
-        {currentUser ?         <Link className="option" to="/logout">
-          LOGOUT
-        </Link> :         <Link className="option" to="/signin">
-          SIGN IN
-        </Link> }
+        {currentUser ? (
+          <div className="option" onClick={logout}>
+            LOGOUT
+          </div>
+        ) : (
+          <Link className="option" to="/signin">
+            SIGN IN
+          </Link>
+        )}
       </div>
     </div>
   );

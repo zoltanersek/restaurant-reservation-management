@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
+import {collection, getDocs, doc, setDoc, deleteDoc} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA22UGx4ewsgGRkBtZjm2Tx4qboUo2cMY",
@@ -61,5 +62,29 @@ export const updateUserProps = async (currentUser, toUpdate) => {
 
   return userRef;
 };
+
+export const getTables = async (currentUser) => {
+  let tables = [];
+  if (!currentUser) return;
+  const tablesFirestore = await getDocs(collection(firestore, `users/${currentUser.id}/tables`));
+  tablesFirestore.forEach(table => {
+    tables = [...tables, {id: table.id, ...table.data()}]
+  });
+  return tables;
+}
+
+export const persistTables = async (currentUser, tables) => {
+  if (!currentUser) return;
+  const tablesFirestore = await getDocs(collection(firestore, `users/${currentUser.id}/tables`));
+  tablesFirestore.forEach(table => {
+    deleteDoc(table.ref)
+  });
+  tables.forEach(table => {
+    const {id, ...other} = table;
+    const ref = doc(firestore, 'users', `${currentUser.id}`, 'tables', `${id}`);
+    setDoc(ref, other)
+  })
+
+}
 
 export default firebase;

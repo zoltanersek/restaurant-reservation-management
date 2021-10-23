@@ -7,6 +7,8 @@ import {
 import {
   signInFailure,
   signInSuccess,
+  signOutFailure,
+  signOutSuccess,
   signUpFailure,
   signUpSuccess,
   updateRestaurantNameFailure,
@@ -71,10 +73,38 @@ export function* onUpdateRestaurantNameStart() {
   );
 }
 
+export function* onSignInStart() {
+  yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
+}
+
+export function* signIn({payload: {email, password}}) {
+  try {
+    const {user} = yield auth.signInWithEmailAndPassword(email, password);
+    yield getSnapshotFromUserAuth(user);
+  } catch (error) {
+    yield put(signInFailure(error.message));
+  }
+}
+
+export function* signOut() {
+  try {
+    yield auth.signOut();
+    yield put(signOutSuccess());
+  } catch (error) {
+    yield put(signOutFailure(error.message));
+  }
+}
+
+export function* onSignOutStart() {
+  yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
+}
+
 export function* userSagas() {
   yield all([
     call(onSignUpStart),
     call(onSignUpSuccess),
     call(onUpdateRestaurantNameStart),
+    call(onSignInStart),
+    call(onSignOutStart)
   ]);
 }

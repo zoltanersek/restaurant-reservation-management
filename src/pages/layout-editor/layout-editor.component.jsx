@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EditTable from "../../components/edit-table/edit-table.component";
 import "./layout-editor.styles.scss";
 import { useSelector } from "react-redux";
-import { selectShowModal } from "../../redux/layout/layout.selectors";
+import {
+  selectLoading,
+  selectShowModal,
+} from "../../redux/layout/layout.selectors";
 import LayoutPreview from "../../components/layout-preview/layout-preview.component";
 import { useDispatch } from "react-redux";
-import { setActivePosition, setActiveTable, toggleLayoutModal } from "../../redux/layout/layout.actions";
+import {
+  fetchStart,
+  setActivePosition,
+  setActiveTable,
+  toggleLayoutModal,
+} from "../../redux/layout/layout.actions";
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
+
+const LayoutPreviewWithSpinner = WithSpinner(LayoutPreview);
 
 const LayoutEditorPage = () => {
   const dispatch = useDispatch();
   const showModal = useSelector(selectShowModal);
+  const isLoading = useSelector(selectLoading);
+  useEffect(() => {
+    dispatch(fetchStart());
+  }, [dispatch]);
+
   const emptyCellClickHandler = (position) => {
     dispatch(setActivePosition(position));
     dispatch(toggleLayoutModal());
@@ -23,7 +39,8 @@ const LayoutEditorPage = () => {
   return (
     <div>
       {showModal && <EditTable />}
-      <LayoutPreview
+      <LayoutPreviewWithSpinner
+        isLoading={isLoading}
         emptyCellClickHandler={emptyCellClickHandler}
         layoutElementClickHandler={layoutElementClickHanlder}
         draggable

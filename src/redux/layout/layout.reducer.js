@@ -5,26 +5,9 @@ const INITIAL_STATE = {
   showModal: false,
   activeTable: undefined,
   activePosition: undefined,
-  tables: [
-    {
-      id: "4b4bb309-014f-438b-aa8f-837cbce9d4b3",
-      number: 1,
-      seats: 2,
-      position: 1,
-    },
-    {
-      id: "e98e1cf7-bc4c-411b-a788-6138e4dc807b",
-      number: 2,
-      seats: 4,
-      position: 2,
-    },
-    {
-      id: "f02ec913-afa1-40eb-8a90-03b5f15e4529",
-      number: 3,
-      seats: 4,
-      position: 3,
-    },
-  ],
+  loading: false,
+  error: undefined,
+  tables: [],
 };
 
 const layoutReducer = (state = INITIAL_STATE, action) => {
@@ -67,6 +50,25 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         tables: [...state.tables.filter((it) => it.id !== action.payload.id)],
+      };
+    case LayoutActionTypes.FETCH_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LayoutActionTypes.FETCH_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: undefined,
+        tables: action.payload,
+      };
+    case LayoutActionTypes.FETCH_FAILURE:
+    case LayoutActionTypes.PERSIST_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
     default:
       return state;

@@ -25,3 +25,11 @@ export const selectUnavailableTableNumbers = createSelector(
     [selectTables],
     (tables) => tables.map(table => table.number)
 )
+export const selectLoading = createSelector(
+  [selectLayout],
+  (layout) => layout.loading
+)
+export const selectError = createSelector(
+  [selectLayout],
+  (layout) => layout.error
+)
