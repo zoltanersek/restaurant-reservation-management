@@ -6,7 +6,9 @@ const INITIAL_STATE = {
   activeTable: undefined,
   activePosition: undefined,
   loading: false,
+  persisting: false,
   error: undefined,
+  persistError: undefined,
   tables: [],
 };
 
@@ -64,11 +66,26 @@ const layoutReducer = (state = INITIAL_STATE, action) => {
         tables: action.payload,
       };
     case LayoutActionTypes.FETCH_FAILURE:
-    case LayoutActionTypes.PERSIST_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case LayoutActionTypes.PERSIST_START:
+      return {
+        ...state,
+        persisting: true,
+      };
+    case LayoutActionTypes.PERSIST_SUCCESS:
+      return {
+        ...state,
+        persisting: false,
+      };
+    case LayoutActionTypes.PERSIST_FAILURE:
+      return {
+        ...state,
+        persisting: false,
+        persistError: action.payload,
       };
     default:
       return state;

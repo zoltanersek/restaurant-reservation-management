@@ -33,3 +33,13 @@ export const selectError = createSelector(
   [selectLayout],
   (layout) => layout.error
 )
+
+export const selectPersisting = createSelector(
+  [selectLayout],
+  (layout) => layout.persisting
+)
+
+export const selectPersistError = createSelector(
+  [selectLayout],
+  (layout) => layout.persistError
+)

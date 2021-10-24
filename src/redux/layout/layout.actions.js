@@ -48,6 +48,10 @@ export const fetchFailure = (error) => ({
     payload: error
 })
 
+export const persistStart = () => ({
+    type: LayoutActionTypes.PERSIST_START
+})
+
 export const persistSuccess = () => ({
     type: LayoutActionTypes.PERSIST_SUCCESS
 })

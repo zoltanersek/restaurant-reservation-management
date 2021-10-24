@@ -87,4 +87,28 @@ export const persistTables = async (currentUser, tables) => {
 
 }
 
+export const getReservations = async (currentUser) => {
+  let reservations = [];
+  if (!currentUser) return;
+  const reservationsFirebase = await getDocs(collection(firestore, `users/${currentUser.id}/reservations`));
+  reservationsFirebase.forEach(reservation => {
+    reservations = [...reservations, {id: reservation.id, ...reservation.data()}]
+  });
+  return reservations;
+}
+
+export const persistReservations = async (currentUser, reservations) => {
+  if (!currentUser) return;
+  const reservationsFirebase = await getDocs(collection(firestore, `users/${currentUser.id}/reservations`));
+  reservationsFirebase.forEach(reservation => {
+    deleteDoc(reservation.ref)
+  });
+  reservations.forEach(reservation => {
+    const {id, ...other} = reservation;
+    const ref = doc(firestore, 'users', `${currentUser.id}`, 'reservations', `${id}`);
+    setDoc(ref, other)
+  })
+
+}
+
 export default firebase;

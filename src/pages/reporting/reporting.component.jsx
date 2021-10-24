@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchStart } from "../../redux/layout/layout.actions";
 import { selectTables } from "../../redux/layout/layout.selectors";
+import { reservationFetchStart } from "../../redux/reservation/reservation.actions";
 import { selectReservationsForDay } from "../../redux/reservation/reservation.selectors";
 import { compareReservations } from "../../redux/reservation/reservation.utils";
 import { getTodayDay } from "../../utils/date.utils";
@@ -11,6 +13,12 @@ const Reporting = () => {
   const [reportDay, setReportDay] = useState(getTodayDay());
   const reservationsForDay = useSelector(selectReservationsForDay(reportDay));
   const tables = useSelector(selectTables);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchStart())
+    dispatch(reservationFetchStart())
+  }, [dispatch])
 
   const handleChange = (e) => {
     setReportDay(e.target.value);
