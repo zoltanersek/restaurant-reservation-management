@@ -36,14 +36,14 @@ const ReservationList = ({ reservations, tableId }) => {
         <div></div>
       </div>
       {reservations.map((reservation) => (
-        <Reservation
+        <Reservation className="reservation-list-header"
           key={reservation.id}
           reservation={reservation}
           setError={setError}
         />
       ))}
       {tempReservations.map((reservation) => (
-        <Reservation
+        <Reservation className="reservation-list-header"
           key={reservation.id}
           reservation={reservation}
           setError={setError}

@@ -31,6 +31,7 @@ const HomePage = () => {
 
   return (
     <div className="welcome">
+    <div>
       <h2>Welcome, {currentUser.name}</h2>
       {!restaurantName && (
         <h3>You must set a restaurant name below to continue!</h3>
@@ -50,6 +51,7 @@ const HomePage = () => {
           {restaurantName ? "Update restaurant name" : "Set restaurant name"}
         </button>
       </form>
+      </div>
     </div>
   );
 };

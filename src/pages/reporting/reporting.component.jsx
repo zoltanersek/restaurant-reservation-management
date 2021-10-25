@@ -42,7 +42,6 @@ const Reporting = () => {
   };
 
   const findTable = (tableId) => {
-    console.log("called find table with", tableId, tables);
     const result = tables.find((it) => it.id === tableId);
     console.log(result);
     return result;
@@ -51,16 +50,16 @@ const Reporting = () => {
   const report = sort(groupByTable(reservationsForDay));
 
   return (
-    <div>
+    <div className="report">
       <span>Select day for reporting:</span>
       <input type="date" name="day" value={reportDay} onChange={handleChange} />
-      {reportDay && <div>You have selected a report for {reportDay}</div>}
+      {reportDay && <div>You have selected a report for <strong>{reportDay}</strong></div>}
       <ul>
         {Object.keys(report)
           .map((it) => findTable(it))
           .map((it) => (
             <li key={it.id}>
-              Table #{it.number} with {it.seats} seats
+              <h3>Table #{it.number} with {it.seats} seats</h3>
               <ul>
                 {report[it.id].map((it2) => (
                   <li key={it2.id}>

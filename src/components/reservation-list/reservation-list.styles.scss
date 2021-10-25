@@ -1,9 +1,10 @@
 .reservation-list {
     width: 100%;
     height: 100%;
-
+    
     .reservation-list-header {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        padding: 10px 0px;
     }
 }
