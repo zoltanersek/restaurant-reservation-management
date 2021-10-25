@@ -44,12 +44,12 @@ const Reservation = ({ reservation, setError, temp, tempCancelled }) => {
       setError("date cannot be empty");
       return;
     }
-    const [hour, minute] = fields.time.split(":");
+    const [, minute] = fields.time.split(":");
     if (minute !== "00") {
       setError("time must be at start of the hour");
       return;
     }
-    const reservationDate = getDateFromReservation(fields)
+    const reservationDate = getDateFromReservation(fields);
     for (const otherReservation of reservationsForActiveTable.filter(
       (it) => it.id !== reservation.id
     )) {

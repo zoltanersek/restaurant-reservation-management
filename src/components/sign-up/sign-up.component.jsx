@@ -21,16 +21,16 @@ const SignUp = () => {
   };
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      if (password != repeatPassword) {
-        setError("passwords don't match")
-        return;
-      }
+    if (password !== repeatPassword) {
+      setError("passwords don't match");
+      return;
+    }
 
-      dispatch(signUpStart({name, email, password}));
-      setError(undefined);
-  } 
+    dispatch(signUpStart({ name, email, password }));
+    setError(undefined);
+  };
 
   return (
     <div className="sign-up">

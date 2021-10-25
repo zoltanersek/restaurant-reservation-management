@@ -1,5 +1,4 @@
 import { ReservationActionTypes } from "./reservation.types";
-import { v4 as uuidv4 } from "uuid";
 
 const INITIAL_STATE = {
   showModal: false,

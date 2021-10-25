@@ -26,38 +26,48 @@ export function* fetchReservationStart() {
 }
 
 export function* onFetchReservationStart() {
-    yield takeLatest(ReservationActionTypes.FETCH_START_RESERVATION, fetchReservationStart);
+  yield takeLatest(
+    ReservationActionTypes.FETCH_START_RESERVATION,
+    fetchReservationStart
+  );
 }
 
 export function* onReservationUpdated() {
-    yield takeLatest(
-        [
-            ReservationActionTypes.DELETE_RESERVATION,
-            ReservationActionTypes.UPSERT_RESERVATION
-        ],
-        startReservatinPersist
-    )
+  yield takeLatest(
+    [
+      ReservationActionTypes.DELETE_RESERVATION,
+      ReservationActionTypes.UPSERT_RESERVATION,
+    ],
+    startReservatinPersist
+  );
 }
 
 export function* startReservatinPersist() {
-    yield put(reservationPersistStart())
+  yield put(reservationPersistStart());
 }
 
 export function* onPersistStart() {
-    yield takeLatest([ReservationActionTypes.PERSIST_START_RESERVATION], persistReservation)
+  yield takeLatest(
+    [ReservationActionTypes.PERSIST_START_RESERVATION],
+    persistReservation
+  );
 }
 
 export function* persistReservation() {
-    try {
-        const user = yield select(selectCurrentUser)
-        const reservations = yield select(selectReservations);
-        yield call(persistReservations, user, reservations)
-        yield put(reservationPersistSuccess())
-    } catch (error) {
-        yield put(reservationPersistFailure(error.message))
-    }
+  try {
+    const user = yield select(selectCurrentUser);
+    const reservations = yield select(selectReservations);
+    yield call(persistReservations, user, reservations);
+    yield put(reservationPersistSuccess());
+  } catch (error) {
+    yield put(reservationPersistFailure(error.message));
+  }
 }
 
 export function* reservationSagas() {
-    yield all([call(onFetchReservationStart), call(onReservationUpdated), call(onPersistStart)]);
+  yield all([
+    call(onFetchReservationStart),
+    call(onReservationUpdated),
+    call(onPersistStart),
+  ]);
 }

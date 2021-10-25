@@ -53,7 +53,9 @@ export function* onSignUpSuccess() {
 
 export function* updateRestaurantName({ payload: { user, newName } }) {
   try {
-    const userRef = yield call(updateUserProps, user, {restaurantName: newName});
+    const userRef = yield call(updateUserProps, user, {
+      restaurantName: newName,
+    });
     const userSnapshot = yield userRef.get();
     yield put(
       updateRestaurantNameSuccess({
@@ -77,9 +79,9 @@ export function* onSignInStart() {
   yield takeLatest(UserActionTypes.SIGN_IN_START, signIn);
 }
 
-export function* signIn({payload: {email, password}}) {
+export function* signIn({ payload: { email, password } }) {
   try {
-    const {user} = yield auth.signInWithEmailAndPassword(email, password);
+    const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     yield put(signInFailure(error.message));
@@ -105,6 +107,6 @@ export function* userSagas() {
     call(onSignUpSuccess),
     call(onUpdateRestaurantNameStart),
     call(onSignInStart),
-    call(onSignOutStart)
+    call(onSignOutStart),
   ]);
 }

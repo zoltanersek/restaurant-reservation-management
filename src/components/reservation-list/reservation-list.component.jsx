@@ -19,8 +19,10 @@ const ReservationList = ({ reservations, tableId }) => {
   };
 
   const tempCancelled = (reservation) => {
-    setTempReservations(tempReservations.filter(it => it.id !== reservation.id))
-  }
+    setTempReservations(
+      tempReservations.filter((it) => it.id !== reservation.id)
+    );
+  };
 
   return (
     <div className="reservation-list">

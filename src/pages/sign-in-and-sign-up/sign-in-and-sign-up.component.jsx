@@ -7,8 +7,8 @@ import { selectError, selectLoading } from "../../redux/user/user.selectors";
 
 import "./sign-in-and-sign-up.styles.scss";
 
-const SignInWithSpinner = WithSpinner(SignIn)
-const SignUpWithSpinner = WithSpinner(SignUp)
+const SignInWithSpinner = WithSpinner(SignIn);
+const SignUpWithSpinner = WithSpinner(SignUp);
 
 const SignInAndSignUp = () => {
   const error = useSelector(selectError);
@@ -18,8 +18,8 @@ const SignInAndSignUp = () => {
       <h1 className="singin-title">Please log in or sign up to continue</h1>
       {error && <span className="error">{error}</span>}
       <div className="sign-in-and-sign-up">
-        <SignInWithSpinner isLoading={isLoading}/>
-        <SignUpWithSpinner isLoading={isLoading}/>
+        <SignInWithSpinner isLoading={isLoading} />
+        <SignUpWithSpinner isLoading={isLoading} />
       </div>
     </div>
   );

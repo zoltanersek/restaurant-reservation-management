@@ -8,10 +8,10 @@ export const sameDay = (d1, d2) => {
 
 export const getTodayDay = () => {
   const date = new Date();
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
 export const getDateFromString = (date) => {
-    const [year, month, day] = date.split("-");
-    return new Date(year, month - 1, day);
-}
+  const [year, month, day] = date.split("-");
+  return new Date(year, month - 1, day);
+};

@@ -6,7 +6,7 @@ import EmptyCell from "./empty-cell.component";
 
 const DroppableEmptyCell = ({ position, ...otherProps }) => {
   const dispatch = useDispatch();
-  const [{ canDrop, isOver }, dropRef] = useDrop(() => ({
+  const [{ isOver }, dropRef] = useDrop(() => ({
     accept: "TABLE",
     drop: (item) => {
       dispatch(updateTablePosition(item, position));
@@ -19,7 +19,11 @@ const DroppableEmptyCell = ({ position, ...otherProps }) => {
 
   return (
     <div
-      style={{ backgroundColor: isOver ? "GhostWhite" : "white", height: "100%", width: "100%" }}
+      style={{
+        backgroundColor: isOver ? "GhostWhite" : "white",
+        height: "100%",
+        width: "100%",
+      }}
       ref={dropRef}
     >
       <EmptyCell {...otherProps} />

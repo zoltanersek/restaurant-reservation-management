@@ -1,7 +1,12 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-const PrivateRoute = ({allow, redirectLocation, component: Component, ...otherProps }) => {
+const PrivateRoute = ({
+  allow,
+  redirectLocation,
+  component: Component,
+  ...otherProps
+}) => {
   return (
     <Route
       {...otherProps}

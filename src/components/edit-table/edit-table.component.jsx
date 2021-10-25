@@ -20,7 +20,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./edit-table.styles.scss";
 import Modal from "../modal/modal.component";
 
-const EditTable = ({ position }) => {
+const EditTable = () => {
   const dispatch = useDispatch();
   const activeTable = useSelector(selectActiveTable);
   const activePosition = useSelector(selectActivePosition);

@@ -12,8 +12,8 @@ const Header = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   const logout = () => {
-    dispatch(signOutStart())
-  }
+    dispatch(signOutStart());
+  };
 
   return (
     <div className="header">

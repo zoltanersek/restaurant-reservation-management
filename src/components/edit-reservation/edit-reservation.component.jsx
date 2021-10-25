@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
@@ -9,7 +9,10 @@ import {
   selectActiveTable,
   selectReservationsForTable,
 } from "../../redux/reservation/reservation.selectors";
-import { compareReservations, getDateFromReservation } from "../../redux/reservation/reservation.utils";
+import {
+  compareReservations,
+  getDateFromReservation,
+} from "../../redux/reservation/reservation.utils";
 import Modal from "../modal/modal.component";
 import ReservationList from "../reservation-list/reservation-list.component";
 
@@ -30,7 +33,7 @@ const EditReservation = () => {
     setFilterValue(e.target.value);
   };
 
-  const getFilteredValues = () => {
+  const getFilteredValues = useCallback(() => {
     if (filterValue === "all") {
       return reservations;
     } else if (filterValue === "past") {
@@ -46,7 +49,7 @@ const EditReservation = () => {
         return date > now;
       });
     }
-  };
+  }, [filterValue, reservations]);
 
   return (
     <Modal

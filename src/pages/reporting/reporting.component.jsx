@@ -16,9 +16,9 @@ const Reporting = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchStart())
-    dispatch(reservationFetchStart())
-  }, [dispatch])
+    dispatch(fetchStart());
+    dispatch(reservationFetchStart());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     setReportDay(e.target.value);
@@ -48,29 +48,33 @@ const Reporting = () => {
     return result;
   };
 
+  const report = sort(groupByTable(reservationsForDay));
+
   return (
     <div>
       <span>Select day for reporting:</span>
       <input type="date" name="day" value={reportDay} onChange={handleChange} />
       {reportDay && <div>You have selected a report for {reportDay}</div>}
       <ul>
-        {Object.keys(sort(groupByTable(reservationsForDay))).map((it) => (
-          <li>
-            Table #{findTable(it).number} with {findTable(it).seats} seats
-            <ul>
-              {sort(groupByTable(reservationsForDay))[it].map((it2) => (
-                <li>
-                <ul>
-                <li>Name: {it2.name}</li>
-                <li>Contact: {it2.contact}</li>
-                <li>Date: {it2.date}</li>
-                <li>Time: {it2.time}</li>
-                </ul>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
+        {Object.keys(report)
+          .map((it) => findTable(it))
+          .map((it) => (
+            <li key={it.id}>
+              Table #{it.number} with {it.seats} seats
+              <ul>
+                {report[it.id].map((it2) => (
+                  <li key={it2.id}>
+                    <ul>
+                      <li>Name: {it2.name}</li>
+                      <li>Contact: {it2.contact}</li>
+                      <li>Date: {it2.date}</li>
+                      <li>Time: {it2.time}</li>
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
       </ul>
     </div>
   );

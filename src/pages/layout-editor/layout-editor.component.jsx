@@ -45,7 +45,11 @@ const LayoutEditorPage = () => {
   return (
     <div>
       {showModal && <EditTable />}
-      <PersistStatus persisting={isPersisting} persistError={persistError} onRetry={() => dispatch(persistStart())}/>
+      <PersistStatus
+        persisting={isPersisting}
+        persistError={persistError}
+        onRetry={() => dispatch(persistStart())}
+      />
       <LayoutPreviewWithSpinner
         isLoading={isLoading}
         emptyCellClickHandler={emptyCellClickHandler}

@@ -14,32 +14,32 @@ export const selectActiveTable = createSelector(
   (layout) => layout.activeTable
 );
 export const selectActivePosition = createSelector(
-    [selectLayout],
-    (layout) => layout.activePosition
-)
+  [selectLayout],
+  (layout) => layout.activePosition
+);
 export const selectNextAvailableTableNumber = createSelector(
   [selectTables],
   (tables) => Math.max(...tables.map((table) => table.number), 0) + 1
 );
 export const selectUnavailableTableNumbers = createSelector(
-    [selectTables],
-    (tables) => tables.map(table => table.number)
-)
+  [selectTables],
+  (tables) => tables.map((table) => table.number)
+);
 export const selectLoading = createSelector(
   [selectLayout],
   (layout) => layout.loading
-)
+);
 export const selectError = createSelector(
   [selectLayout],
   (layout) => layout.error
-)
+);
 
 export const selectPersisting = createSelector(
   [selectLayout],
   (layout) => layout.persisting
-)
+);
 
 export const selectPersistError = createSelector(
   [selectLayout],
   (layout) => layout.persistError
-)
+);

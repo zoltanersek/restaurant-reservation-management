@@ -14,7 +14,7 @@ const HomePage = () => {
   const error = useSelector(selectError);
   const currentUser = useSelector(selectCurrentUser);
   const [field, setField] = useState(
-    currentUser.restaurantName ? currentUser.restaurantName : ''
+    currentUser.restaurantName ? currentUser.restaurantName : ""
   );
   const restaurantName = currentUser.restaurantName;
 
@@ -26,7 +26,7 @@ const HomePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(updateRestaurantNameStart(currentUser, field))
+    dispatch(updateRestaurantNameStart(currentUser, field));
   };
 
   return (

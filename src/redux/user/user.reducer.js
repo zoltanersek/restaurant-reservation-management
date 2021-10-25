@@ -3,7 +3,7 @@ import UserActionTypes from "./user.types";
 const INITIAL_STATE = {
   currentUser: null,
   error: null,
-  loading: false
+  loading: false,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -12,22 +12,22 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case UserActionTypes.SIGN_IN_START:
       return {
         ...state,
-        loading: true
-      }
+        loading: true,
+      };
     case UserActionTypes.SIGN_IN_SUCCESS:
     case UserActionTypes.UPDATE_RESTAURANT_NAME_SUCCESS:
       return {
         ...state,
         currentUser: action.payload,
         error: null,
-        loading: false
+        loading: false,
       };
     case UserActionTypes.SIGN_OUT_SUCCESS:
       return {
         ...state,
         currentUser: null,
         error: null,
-        loading: false
+        loading: false,
       };
     case UserActionTypes.SIGN_IN_FAILURE:
     case UserActionTypes.SIGN_OUT_FAILURE:
@@ -36,7 +36,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.payload,
-        loading: false
+        loading: false,
       };
     default:
       return state;
